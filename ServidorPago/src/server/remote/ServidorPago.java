@@ -1,12 +1,23 @@
 package server.remote;
 
 import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 import server.data.Pago;
 
-public class ServidorPago implements IServidorPago{
+public class ServidorPago extends UnicastRemoteObject implements IServidorPago{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	protected ServidorPago() throws RemoteException {
+		super();
+	}
+
 	private ArrayList<Pago> pagos = new ArrayList<Pago>();
 
 	@Override
