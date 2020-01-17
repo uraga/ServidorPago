@@ -8,18 +8,12 @@ import java.util.ArrayList;
 import server.data.UsuarioPaypal;
 
 public class ServidorPago extends UnicastRemoteObject implements IServidorPago{
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
+	private ArrayList<UsuarioPaypal> usuarios = new ArrayList<UsuarioPaypal>();
 
 	protected ServidorPago() throws RemoteException {
 		super();
-	}
-
-	private ArrayList<UsuarioPaypal> usuarios = new ArrayList<UsuarioPaypal>();
-	static {
 		UsuarioPaypal u1 = new UsuarioPaypal();
 		u1.setEmail("j.uraga@opendeusto.es"); u1.setContrasenya("12345"); u1.setMonedero(1000);
 		UsuarioPaypal u2 = new UsuarioPaypal();
@@ -28,15 +22,32 @@ public class ServidorPago extends UnicastRemoteObject implements IServidorPago{
 		u3.setEmail("ibai.guillen@opendeusto.es"); u3.setContrasenya("12345"); u3.setMonedero(1000);
 		UsuarioPaypal u4 = new UsuarioPaypal();
 		u4.setEmail("yeray.bellanco@opendeusto.es"); u4.setContrasenya("abcd"); u4.setMonedero(1000);
+		
+		usuarios.add(u1);
+		usuarios.add(u2);
+		usuarios.add(u3);
+		usuarios.add(u4);
 	}
+
+	
 
 	@Override
 	public boolean realizarPago(int precio, String email, String contrasenya) {
+		System.out.println("..");
+		System.out.println("..Mail: "+email );
+		System.out.println("..Pass: "+ contrasenya);
+		System.out.println("..Precio: "+ precio);
 		for(UsuarioPaypal u : usuarios) {
 			if (u.getEmail().equals(email) && u.getContrasenya().equals(contrasenya)) {
-				return u.pagar(precio);
+				if(u.pagar(precio) == true) {
+					System.out.println("Pago realizado");
+					System.out.println("..");
+					return true;
+				}
 			}
 		}
+		System.out.println("Pago cancelado");
+		System.out.println("..");
 		return false;
 	}
 	
