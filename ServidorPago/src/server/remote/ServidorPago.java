@@ -5,7 +5,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-import server.data.Pago;
+import server.data.UsuarioPaypal;
 
 public class ServidorPago extends UnicastRemoteObject implements IServidorPago{
 	
@@ -18,15 +18,22 @@ public class ServidorPago extends UnicastRemoteObject implements IServidorPago{
 		super();
 	}
 
-	private ArrayList<Pago> pagos = new ArrayList<Pago>();
+	private ArrayList<UsuarioPaypal> usuarios = new ArrayList<UsuarioPaypal>();
+	static {
+		UsuarioPaypal u1 = new UsuarioPaypal();
+		u1.setEmail("j.uraga@opendeusto.es"); u1.setContrasenya("12345"); u1.setMonedero(1000);
+		UsuarioPaypal u2 = new UsuarioPaypal();
+		u2.setEmail("gorka.garate@opendeusto.es"); u2.setContrasenya("abcd"); u2.setMonedero(1000);
+	}
 
 	@Override
-	public boolean realizarPago(int precio, String email) {
-		Pago p = new Pago();
-		p.setEmail(email);
-		p.setPrecio(precio);
-		pagos.add(p);
-		return true;
+	public boolean realizarPago(int precio, String email, String contrasenya) {
+		for(UsuarioPaypal u : usuarios) {
+			if (u.getEmail().equals(email) && u.getContrasenya().equals(contrasenya)) {
+				return u.pagar(precio);
+			}
+		}
+		return false;
 	}
 	
 	public static void main(String[] args) {
