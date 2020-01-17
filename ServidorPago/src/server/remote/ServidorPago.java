@@ -24,6 +24,10 @@ public class ServidorPago extends UnicastRemoteObject implements IServidorPago{
 		u1.setEmail("j.uraga@opendeusto.es"); u1.setContrasenya("12345"); u1.setMonedero(1000);
 		UsuarioPaypal u2 = new UsuarioPaypal();
 		u2.setEmail("gorka.garate@opendeusto.es"); u2.setContrasenya("abcd"); u2.setMonedero(1000);
+		UsuarioPaypal u3 = new UsuarioPaypal();
+		u3.setEmail("ibai.guillen@opendeusto.es"); u3.setContrasenya("12345"); u3.setMonedero(1000);
+		UsuarioPaypal u4 = new UsuarioPaypal();
+		u4.setEmail("yeray.bellanco@opendeusto.es"); u4.setContrasenya("abcd"); u4.setMonedero(1000);
 	}
 
 	@Override
