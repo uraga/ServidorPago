@@ -51,6 +51,26 @@ public class ServidorPago extends UnicastRemoteObject implements IServidorPago{
 		return false;
 	}
 	
+	@Override
+	public boolean tieneFondos(int precio, String email, String contrasenya) throws RemoteException {
+		System.out.println("..");
+		System.out.println("..Mail: "+email );
+		System.out.println("..Pass: "+ contrasenya);
+		System.out.println("..Precio: "+ precio);
+		for(UsuarioPaypal u : usuarios) {
+			if (u.getEmail().equals(email) && u.getContrasenya().equals(contrasenya)) {
+				if(u.getMonedero() >= precio) {
+					System.out.println("Tiene fondos suficientes");
+					System.out.println("..");
+					return true;
+				}
+			}
+		}
+		System.out.println("No tiene fondos");
+		System.out.println("..");
+		return false;
+	}
+	
 	public static void main(String[] args) {
 		if (args.length != 3) {
 			System.out.println("usage: java [policy] [codebase] server.Server [host] [port] [server]");
@@ -72,5 +92,9 @@ public class ServidorPago extends UnicastRemoteObject implements IServidorPago{
 			e.printStackTrace();
 		}
 	}
+
+
+
+
 
 }

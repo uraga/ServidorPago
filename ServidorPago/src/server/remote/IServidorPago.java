@@ -6,5 +6,8 @@ import java.rmi.RemoteException;
 public interface IServidorPago extends Remote{
 	
 	public boolean realizarPago(int precio, String email, String contrasenya) throws RemoteException; 
+	
+	public boolean tieneFondos(int precio, String email, String contrasenya) throws RemoteException; 
+
 
 }
